@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'Auth'], function(){
+
+  Route::get('/', 'MainController@index');
+
 });
 
 /*Route::get('user/{id}', function($id){
