@@ -17,22 +17,6 @@ Route::group(['middleware' => 'Auth'], function(){
 
 });
 
-/*Route::get('user/{id}', function($id){
-  return 'Users'.$id;
-});*/
-
-/*Route::get('user/{name?}', function($name='john'){
-  return $name;
-});
-
-Route::get('user/{name}/{id}', function($name,$id){
-  return 'User name '.$name.' '.$id;
-})->where(['name'=>'[a-zA-Z]+', 'id=>[0-9]+']);
-
-Route::get('method/action',['as'=>'action', function(){
-  return 'method/action';
-}]);*/
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
