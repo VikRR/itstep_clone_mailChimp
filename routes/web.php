@@ -20,7 +20,8 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/model', 'HomeController@model');
 
-/*Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function(){
 	Route::resource('subscribers', 'SubscriberController');
-});*/
-// Route::resource('subscribers', 'SubscriberController');
+});
+
+
