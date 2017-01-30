@@ -40,7 +40,7 @@ class SubscriberController extends Controller
             'user_id' => \Auth::user()->id,
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
-            'email' => $request->get('email');
+            'email' => $request->get('email'),
             ]);
     }
 
