@@ -12,7 +12,7 @@
 */
 
 
-// Route::get('/', 'MainController@index');
+Route::get('/', 'MainController@index');
 
 Auth::routes();
 
