@@ -30,24 +30,24 @@ class SubscriberController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->validator($request->all())->validate();
         SubscriberModel::create([
-            'user_id' => \Auth::user()->id,
+            'user_id'    => \Auth::user()->id,
             'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
-            'email' => $request->get('email'),
-            ]);
+            'last_name'  => $request->get('last_name'),
+            'email'      => $request->get('email'),
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -58,30 +58,43 @@ class SubscriberController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $subscribers = SubscriberModel::select(['id', 'first_name', 'last_name', 'email'])
+            ->where(['id' => $id])
+            ->get();
+        dump($subscribers);
+
+        return view('subscribers.update', ['subscribers' => $subscribers]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validator($request->all())->validate();
+        $subscriber = SubscriberModel::find($id)
+            ->update([
+                'first_name' => $request->get('first_name'),
+                'last_name'  => $request->get('last_name'),
+                'email'      => $request->get('email'),
+            ]);
+
+        return view('subscribers.list' , ['subscriber' => $subscriber->email]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -89,11 +102,16 @@ class SubscriberController extends Controller
         //
     }
 
-    protected function validator(array $data){
-        return \Validator::make($data,[
+    /**
+     * @param array $data
+     * @return \Illuminate\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return \Validator::make($data, [
             'first_name' => 'required|max:128|min:2',
-            'last_name' => 'required|max:128|min:2',
-            'email' => 'required|email|max:128',
-            ]);
+            'last_name'  => 'required|max:128|min:2',
+            'email'      => 'required|email|max:128',
+        ]);
     }
 }
