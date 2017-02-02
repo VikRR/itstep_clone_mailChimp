@@ -95,8 +95,8 @@ class SubscriberController extends Controller
                 'email'      => $request->get('email'),
             ]);
 
-        return redirect()->action('SubscriberController@show',[\Auth::user()->id]);
-        //return view('subscribers.list',['subscribers' => $subscribers]);
+        //return redirect()->action('SubscriberController@show',[\Auth::user()->id]);
+        return view('subscribers.list',['subscribers' => $subscribers]);
     }
 
     /**
@@ -107,10 +107,10 @@ class SubscriberController extends Controller
      */
     public function destroy($id)
     {
-/*        $subscriber = SubscriberModel::find($id);
+        $subscriber = SubscriberModel::find($id);
         $subscriber->delete();
 
-        return redirect('/subscribers/'.\Auth::user()->id);*/
+        return redirect('/subscribers/'.\Auth::user()->id);
     }
 
     /**
