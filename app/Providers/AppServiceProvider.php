@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //\View::share('user',\Auth::user()->id);
+        //$data = array(\Auth::user()->id);
+        //view()->share('user',$data);
+        //view()->share('user_id',[\Auth::user()->id]);
     }
 
     /**

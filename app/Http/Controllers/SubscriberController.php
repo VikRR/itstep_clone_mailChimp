@@ -42,6 +42,8 @@ class SubscriberController extends Controller
             'last_name'  => $request->get('last_name'),
             'email'      => $request->get('email'),
         ]);
+
+        return redirect('subscribers/'.\Auth::user()->id);
     }
 
     /**
@@ -52,7 +54,12 @@ class SubscriberController extends Controller
      */
     public function show($id)
     {
-        //
+        $subscribers = SubscriberModel::select('id', 'first_name', 'last_name', 'email')
+            ->where(['user_id' => $id])
+            ->get();
+        dump($subscribers);
+
+        return view('subscribers.list', ['subscribers' => $subscribers]);
     }
 
     /**
@@ -81,14 +88,15 @@ class SubscriberController extends Controller
     public function update(Request $request, $id)
     {
         $this->validator($request->all())->validate();
-        $subscriber = SubscriberModel::find($id)
-            ->update([
+        $subscribers = SubscriberModel::find($id);
+        $subscribers->update([
                 'first_name' => $request->get('first_name'),
                 'last_name'  => $request->get('last_name'),
                 'email'      => $request->get('email'),
             ]);
 
-        return view('subscribers.list' , ['subscriber' => $subscriber->email]);
+        return redirect()->action('SubscriberController@show',[\Auth::user()->id]);
+        //return view('subscribers.list',['subscribers' => $subscribers]);
     }
 
     /**
@@ -99,7 +107,10 @@ class SubscriberController extends Controller
      */
     public function destroy($id)
     {
-        //
+/*        $subscriber = SubscriberModel::find($id);
+        $subscriber->delete();
+
+        return redirect('/subscribers/'.\Auth::user()->id);*/
     }
 
     /**

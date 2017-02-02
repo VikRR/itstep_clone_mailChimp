@@ -78,6 +78,33 @@
             </div>
         </nav>
 
+        {{--@include ('navbar')--}}
+
+        {{--@if(Request::url() === 'subscribers.show')--}}
+        {{--{{ dump(Request::url()) }}--}}
+        {{--{{ dump(url('/subscribers/')) }}--}}
+        {{--{{ dump($user_id) }}--}}
+
+        @if(Auth::user())
+
+            @include('navbar')
+
+        @endif
+
+{{--            <nav class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active"><a href="#">Home</a></li>
+                            --}}{{--<li><a href="{{ url('/subscribers/'.$user->id) }}">Subscriber list</a></li>--}}{{--
+                            <li><a href="#">Send mail</a></li>
+                            <li><a href="#">Settings</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>--}}
+        {{--@endif--}}
+
         @yield('content')
     </div>
 
