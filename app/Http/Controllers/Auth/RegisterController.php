@@ -47,11 +47,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = array(
+            'regex'=>'The password must contain alphabetical letters and numbers',
+            );
         return Validator::make($data, [
             'email' => 'required|email|max:255|unique:users',
-            // 'password' => 'required|min:6|regex:/A-Za-z0-9/',
-            'password' => 'required|min:6',
-        ]);
+            'password' => 'required|min:6|regex:/^[A-Za-z]{1,}[0-9]{1,}$/',
+        ],$messages);
     }
 
     /**
