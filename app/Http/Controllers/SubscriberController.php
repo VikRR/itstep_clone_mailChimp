@@ -35,6 +35,10 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
+        // echo $request->has('first_name');
+        // dump($request->only(['first_name']));
+        // dump($request->except(['first_name']));
+        // exit;
         $this->validator($request->all())->validate();
         SubscriberModel::create([
             'user_id'    => \Auth::user()->id,

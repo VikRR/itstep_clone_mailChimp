@@ -66,9 +66,29 @@ class HomeController extends Controller
 
         // Subscriber::find(1)->delete();
 
-        echo'<pre>';
-        print_r(User::find(1)->subscribers()->get()->toArray());
-        echo'</pre>';
+       // echo'<pre>';
+       // print_r(User::find(1)->subscribers()->get()->toArray());
+       // echo'</pre>';
+       
+       //Subscriber::find(2)->delete();
+       
+       //dump(Subscriber::onlyTrashed()->get());
+       
+       //Subscriber::onlyTrashed()->find(2)->restore();
+       
+       //Subscriber::find(2)->forceDelete();
+       
+       // подключить софт делете в проект
+       
+       //php artisan down -> errors 503
+       
+       //php artisan up -> home page 
+       
+       
+       
+       
+       
+       
 
     }
 }
