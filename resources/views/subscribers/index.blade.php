@@ -54,10 +54,10 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {!! $subscribers->render() !!}
                         </div>
                     </div>
                 </div>
+                {!! $subscribers->render() !!}
             </div>
         </div>
     </div>
