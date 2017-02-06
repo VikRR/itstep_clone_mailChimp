@@ -40,14 +40,17 @@ class SubscriberController extends Controller
         // dump($request->except(['first_name']));
         // exit;
         $this->validator($request->all())->validate();
-        SubscriberModel::create([
+        $subscriber = SubscriberModel::create([
             'user_id'    => \Auth::user()->id,
             'first_name' => $request->get('first_name'),
             'last_name'  => $request->get('last_name'),
             'email'      => $request->get('email'),
         ]);
 
-        //return redirect('subscribers/'.\Auth::user()->id);
+        return redirect('/subscribers')
+            ->with([
+                'flash_message' => 'Subscriber ' . $subscriber->email . ' created successfully',
+            ]);
     }
 
     /**
