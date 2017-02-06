@@ -19,7 +19,8 @@ class ListController extends Controller
      */
     public function index()
     {
-        return view('lists.index', ['lists' => ListModel::all()]);
+        $lists = ListModel::paginate(5);
+        return view('lists.index', ['lists' => $lists]);
     }
 
     /**

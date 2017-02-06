@@ -50,6 +50,7 @@
 
                                 </tbody>
                             </table>
+                            {!! $lists->render() !!}
                         </div>
                     </div>
                 </div>

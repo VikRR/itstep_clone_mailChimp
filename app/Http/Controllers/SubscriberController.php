@@ -14,7 +14,8 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        return view('subscribers.index', ['subscribers' => SubscriberModel::all()]);
+        $subscribers = SubscriberModel::paginate(5);
+        return view('subscribers.index', ['subscribers' => $subscribers]);
     }
 
     /**
@@ -61,12 +62,7 @@ class SubscriberController extends Controller
      */
     public function show($id)
     {
-        //$subscribers = SubscriberModel::select('id', 'first_name', 'last_name', 'email')
-        //    ->where(['user_id' => $id])
-        //    ->get();
-        //dump($subscribers);
         //
-        //return view('subscribers.list', ['subscribers' => $subscribers]);
     }
 
     /**
@@ -80,6 +76,7 @@ class SubscriberController extends Controller
         $subscribers = SubscriberModel::select(['id', 'first_name', 'last_name', 'email'])
             ->where(['id' => $id])
             ->get();
+
         dump($subscribers);
 
         return view('subscribers.update', ['subscribers' => $subscribers]);
@@ -102,15 +99,16 @@ class SubscriberController extends Controller
             'email'      => $request->get('email'),
         ]);
 
-        //return redirect()->action('SubscriberController@show',[\Auth::user()->id]);
-        return view('subscribers.list', ['subscribers' => $subscribers]);
+        return redirect('/subscribers')
+            ->with([
+                'flash_message' => $subscribers->email . ' user data has been successfully updated!',
+            ]);
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
@@ -123,6 +121,7 @@ class SubscriberController extends Controller
                 'flash_message' => 'Subscriber ' . $subscriber->email . ' successfully delete.',
             ]);
     }
+
 
     /**
      * @param array $data

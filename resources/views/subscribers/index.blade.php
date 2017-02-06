@@ -18,7 +18,7 @@
                                 <div class="col-md-10">
                                     <h3>Subscribers</h3>
                                 </div>
-                                <div class="col-md-2 text-center">
+                                <div class="col-md-2">
                                     <a class="btn btn-default" href="{{ url('/subscribers/create') }}">Add New</a>
                                 </div>
                             </div>
@@ -38,14 +38,10 @@
                                 <tbody>
                                 @foreach($subscribers as $subscriber)
                                     <tr>
-                                        <td>{{ $subscriber->first_name.' '.$subscriber->last_name }}</td>
+                                        <td>{{ $subscriber->first_name . ' ' . $subscriber->last_name }}</td>
                                         <td>{{ $subscriber->email }}</td>
                                         <td>
-                                            <form action="{{ url('/subscribers',$subscriber->id) }}" method="post">
-                                                {{ csrf_field() }}
-                                                {{ method_field('PUT') }}
-                                                <button class="btn btn-info" type="submit">Update</button>
-                                            </form>
+                                            <a href="{{ url('/subscribers/' . $subscriber->id . '/edit') }}" class="btn btn-primary">Update</a>
                                         </td>
                                         <td>
                                             <form action="{{ url('/subscribers'),$subscriber->id }}" method="post">
@@ -58,6 +54,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {!! $subscribers->render() !!}
                         </div>
                     </div>
                 </div>
