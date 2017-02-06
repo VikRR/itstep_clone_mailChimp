@@ -14,7 +14,7 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        //
+        return view('subscribers.index', ['subscribers' => SubscriberModel::all()]);
     }
 
     /**
@@ -47,7 +47,7 @@ class SubscriberController extends Controller
             'email'      => $request->get('email'),
         ]);
 
-        return redirect('subscribers/'.\Auth::user()->id);
+        //return redirect('subscribers/'.\Auth::user()->id);
     }
 
     /**
@@ -58,12 +58,12 @@ class SubscriberController extends Controller
      */
     public function show($id)
     {
-        $subscribers = SubscriberModel::select('id', 'first_name', 'last_name', 'email')
-            ->where(['user_id' => $id])
-            ->get();
-        dump($subscribers);
-
-        return view('subscribers.list', ['subscribers' => $subscribers]);
+        //$subscribers = SubscriberModel::select('id', 'first_name', 'last_name', 'email')
+        //    ->where(['user_id' => $id])
+        //    ->get();
+        //dump($subscribers);
+        //
+        //return view('subscribers.list', ['subscribers' => $subscribers]);
     }
 
     /**
@@ -94,13 +94,13 @@ class SubscriberController extends Controller
         $this->validator($request->all())->validate();
         $subscribers = SubscriberModel::find($id);
         $subscribers->update([
-                'first_name' => $request->get('first_name'),
-                'last_name'  => $request->get('last_name'),
-                'email'      => $request->get('email'),
-            ]);
+            'first_name' => $request->get('first_name'),
+            'last_name'  => $request->get('last_name'),
+            'email'      => $request->get('email'),
+        ]);
 
         //return redirect()->action('SubscriberController@show',[\Auth::user()->id]);
-        return view('subscribers.list',['subscribers' => $subscribers]);
+        return view('subscribers.list', ['subscribers' => $subscribers]);
     }
 
     /**
@@ -111,10 +111,14 @@ class SubscriberController extends Controller
      */
     public function destroy($id)
     {
-        $subscriber = SubscriberModel::find($id);
+        $subscriber = SubscriberModel::findOrFail($id);
         $subscriber->delete();
 
-        return redirect('/subscribers/'.\Auth::user()->id);
+        return redirect()
+            ->back()
+            ->with([
+                'flash_message' => 'Subscriber ' . $subscriber->email . ' successfully delete.',
+            ]);
     }
 
     /**
