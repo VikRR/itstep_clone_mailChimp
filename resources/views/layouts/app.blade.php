@@ -49,7 +49,7 @@
                 </ul>
 
                 <!-- Right Side Of Navbar -->
-                <div class="col-md-2 col-md-push-6 lang">
+                <div class="col-md-2 col-md-push-9 lang">
                     <form class="locale {{ (App::isLocale('en'))? 'select' : '' }}" action="{{ action('LocalizationController@switch') }}" method="post">
                         {{ csrf_field() }}
                         <input type="text" hidden name="locale" value="en"></input>
