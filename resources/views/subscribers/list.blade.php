@@ -5,16 +5,17 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel-heading text-center subscriber-list">
-                    <h3>Subscriber List</h3>
-                    <a class="btn btn-default" href="{{ url('/subscribers/create') }}">Add new</a>
+                    <h3>{{ trans('SubscribersList.list') }}</h3>
+                    <a class="btn btn-default"
+                       href="{{ url('/subscribers/create') }}">{{ trans('SubscribersList.add') }}</a>
                     {{--<p>Данные {{ $subscriber->email }} успешно обновлены</p>--}}
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
+                            <th>{{ trans('Table.name') }}</th>
+                            <th>{{ trans('Table.email') }}</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -36,7 +37,8 @@
                                     <form action="{{ url('/subscribers/'.$subscriber->id) }}" method="POST">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <input class="btn btn-danger" type="submit" value="Delete">
+                                        <button class="btn btn-danger"
+                                                type="submit">{{ trans('SubscribersList.button') }}</button>
                                     </form>
                                 </td>
                             </tr>

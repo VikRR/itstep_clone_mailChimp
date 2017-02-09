@@ -7,7 +7,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading text-center">
-                        <h3>Update subscriber data</h3>
+                        <h3>{{ trans('SubscribersUpdate.update') }}</h3>
                     </div>
                     <div class="panel-body">
                         @foreach($subscribers as $subscriber)
@@ -16,7 +16,7 @@
                                 {{ csrf_field() }}
                                 {{ method_field('PUT') }}
                                 <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                                    <label for="first_name" class="col-md-4 control-label">First name</label>
+                                    <label for="first_name" class="col-md-4 control-label">{{ trans('Form.first_name') }}</label>
                                     <div class="col-md-6">
                                         <input id="first_name" class="form-control" type="text"  name="first_name"
                                                value="{{ $subscriber->first_name }}" required autofocus>
@@ -29,7 +29,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                                    <label class="col-md-4 control-label" for="last_name" >Last Name</label>
+                                    <label class="col-md-4 control-label" for="last_name" >{{ trans('Form.last_name') }}</label>
                                     <div class="col-md-6">
                                         <input id="last_name" class="form-control" type="text"  name="last_name"
                                                value="{{ $subscriber->last_name }}" required>
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <label for="last_name" class="col-md-4 control-label">E-Mail Address</label>
+                                    <label for="last_name" class="col-md-4 control-label">{{ trans('Form.email') }}</label>
                                     <div class="col-md-6">
                                         <input id="email" class="form-control" type="email" name="email" required
                                                value="{{ $subscriber->email }}">
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <div class="col-md-8 col-md-offset-4">
                                         <button class="btn btn-primary" type="submit">
-                                            Update
+                                            {{ trans('SubscribersUpdate.button') }}
                                         </button>
                                     </div>
                                 </div>

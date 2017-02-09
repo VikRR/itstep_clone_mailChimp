@@ -16,10 +16,11 @@
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <div class="col-md-10">
-                                    <h3>Subscribers</h3>
+                                    <h3>{{ trans('SubscribersIndex.subscriber') }}</h3>
                                 </div>
                                 <div class="col-md-2">
-                                    <a class="btn btn-default" href="{{ url('/subscribers/create') }}">Add New</a>
+                                    <a class="btn btn-default"
+                                       href="{{ url('/subscribers/create') }}">{{ trans('SubscribersIndex.add') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -29,8 +30,8 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
+                                    <th>{{ trans('Table.name') }}</th>
+                                    <th>{{ trans('Form.email') }}</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -41,13 +42,16 @@
                                         <td>{{ $subscriber->first_name . ' ' . $subscriber->last_name }}</td>
                                         <td>{{ $subscriber->email }}</td>
                                         <td>
-                                            <a href="{{ url('/subscribers/' . $subscriber->id . '/edit') }}" class="btn btn-primary">Update</a>
+                                            <a href="{{ url('/subscribers/' . $subscriber->id . '/edit') }}"
+                                               class="btn btn-primary">{{ trans('SubscribersIndex.update') }}</a>
                                         </td>
                                         <td>
                                             <form action="{{ url('/subscribers'),$subscriber->id }}" method="post">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
-                                                <button class="btn btn-danger" type="submit">Delete</button>
+                                                <button class="btn btn-danger"
+                                                        type="submit">{{ trans('SubscribersIndex.delete') }}
+                                                </button>
                                             </form>
                                         </td>
                                     </tr>

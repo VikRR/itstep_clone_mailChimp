@@ -77,8 +77,6 @@ class SubscriberController extends Controller
             ->where(['id' => $id])
             ->get();
 
-        dump($subscribers);
-
         return view('subscribers.update', ['subscribers' => $subscribers]);
     }
 

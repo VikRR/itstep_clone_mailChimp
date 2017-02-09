@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @section('content')
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -14,10 +16,11 @@
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <div class="col-md-10">
-                                    <h3>Lists</h3>
+                                    <h3>{{ trans('ListIndex.list') }}</h3>
                                 </div>
                                 <div class="col-md-2 text-center">
-                                    <a class="btn btn-default" href="{{url('/lists/create')}}">Add</a>
+                                    <a class="btn btn-default"
+                                       href="{{url('/lists/create')}}">{{ trans('ListIndex.add') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -27,7 +30,7 @@
                             <table class="table table-striped">
                                 <!-- Table Headings -->
                                 <thead>
-                                <th>Name</th>
+                                <th>{{ trans('ListIndex.name') }}</th>
                                 <th></th>
                                 </thead>
                                 <!-- Table Body -->
@@ -42,7 +45,7 @@
                                             <form class="text-right" action="{{url('/lists',$list->id)}}" method="POST">
                                                 {{csrf_field()}}
                                                 {{method_field('DELETE')}}
-                                                <button class="btn btn-danger">Delete</button>
+                                                <button class="btn btn-danger">{{ trans('ListIndex.button') }}</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -57,4 +60,5 @@
             </div>
         </div>
     </div>
+
 @endsection
