@@ -50,21 +50,27 @@
 
                 <!-- Right Side Of Navbar -->
                 <div class="col-md-2 col-md-push-9 lang">
-                    <form class="locale {{ (App::isLocale('en'))? 'select' : '' }}" action="{{ action('LocalizationController@switch') }}" method="post">
-                        {{ csrf_field() }}
-                        <input type="text" hidden name="locale" value="en"></input>
-                        <input class="input-locale" type="submit" name="submit" value="En">
-                    </form>
-                    <form class="locale {{ (App::isLocale('ua'))? 'select' : ''}}" action="{{ action('LocalizationController@switch') }}" method="post">
-                        {{ csrf_field() }}
-                        <input type="text" hidden name="locale" value="ua"></input>
-                        <input class="input-locale" type="submit" name="submit" value="Ua">
-                    </form>
-                    <form class="locale {{ (App::isLocale('ru'))? 'select' : ''}}" action="{{ action('LocalizationController@switch') }}" method="post">
-                        {{ csrf_field() }}
-                        <input type="text" hidden name="locale" value="ru"></input>
-                        <input class="input-locale" type="submit" name="submit" value="Ru">
-                    </form>
+                    <div {{ (App::isLocale('en'))? 'class=select' : '' }}>
+                        <form class="locale" action="{{ action('LocalizationController@switch') }}" method="post">
+                            {{ csrf_field() }}
+                            <input type="text" hidden name="locale" value="en"></input>
+                            <input class="input-locale" type="submit" name="submit" value="En">
+                        </form>
+                    </div>
+                    <div {{ (App::isLocale('ua'))? 'class=select' : ''}}>
+                        <form class="locale" action="{{ action('LocalizationController@switch') }}" method="post">
+                            {{ csrf_field() }}
+                            <input type="text" hidden name="locale" value="ua"></input>
+                            <input class="input-locale" type="submit" name="submit" value="Ua">
+                        </form>
+                    </div>
+                    <div {{ (App::isLocale('ru'))? 'class = select' : ''}}>
+                        <form class="locale" action="{{ action('LocalizationController@switch') }}" method="post">
+                            {{ csrf_field() }}
+                            <input type="text" hidden name="locale" value="ru"></input>
+                            <input class="input-locale" type="submit" name="submit" value="Ru">
+                        </form>
+                    </div>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->

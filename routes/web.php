@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::post('language', [
     'before' => 'csrf',
-    'as'     => 'language-chooser',
+    //'as'     => 'language-chooser',
     'uses'   => 'LocalizationController@switch',
 ]);
 
