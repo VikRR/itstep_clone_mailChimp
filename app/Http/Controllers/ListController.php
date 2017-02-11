@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ListMOdel;
-use Illuminate\Http\Request;
-use App\Http\Requests\Lists\Create as CreateRequest;
 
+
+use App\Models\ListModel;
+use Illuminate\Http\Request;
+use App\User as UserModel;
+use App\Http\Requests\Create as CreateRequest;
+
+/**
+ * Class ListController
+ * @package App\Http\Controllers
+ */
 
 class ListController extends Controller
 {
@@ -16,7 +23,13 @@ class ListController extends Controller
      */
     public function index()
     {
-        return view('lists.index',['lists'=>ListModel::all()]);
+
+        // $lists = ListModel::paginate(5);
+        // return view('lists.index', ['lists' => $lists]);
+
+        $lists = UserModel::find(\Auth::user()->id)->lists()->paginate(2);
+
+        return view('lists.index',['lists'=>$lists]);
     }
 
     /**
@@ -26,30 +39,34 @@ class ListController extends Controller
      */
     public function create()
     {
-        return view('lists.create');
+        return view('lists.create',
+            ['list'=>new ListModel()]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+
+     * @param  \App\Http\Requests\Create $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateRequest $request)
     {
         $list = ListModel::create([
-        'user_id'=>\Auth::user()->id,
-        'name'=>$request->get('name'),
+            'user_id' => \Auth::user()->id,
+            'name'    => $request->get('name'),
         ]);
 
-        return redirect('/lists')
-        ->with(['flash_message'=>'List '.$list->name.' successfully created']);
+        return redirect('/lists')->with([
+            'flash_message' => 'List ' . $list->name . ' created successfully',
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -60,37 +77,52 @@ class ListController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $list = ListModel::findOrFail($id);
+        return view('lists.create',['list'=>$list]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateRequest $request, $id)
     {
-        //
+        $list = ListModel::findOrFail($id);
+        $list->fill($request->only([
+            'name'
+            ]));
+        $list->save();
+        return redirect('/lists')
+        ->with([
+            'flash_message'=>'List '.$list->name.' successfully update'
+            ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ListModel $list)
     {
-        $list = ListModel::findOrFail($id);
+        // $list = ListModel::findOrFail($id);
         $list->delete();
-        return redirect()->back()
-        ->with(['flash_message'=>'List '.$list->name.' successfully deleted']);
+
+        return redirect()
+            ->back()
+            ->with([
+                'flash_message' => 'List ' . $list->name . ' successfully delete.',
+            ]);
     }
 }

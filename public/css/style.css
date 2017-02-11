@@ -1,0 +1,28 @@
+.table>tbody>tr>td, .table>tbody>tr>th,
+.table>tfoot>tr>td, .table>tfoot>tr>th,
+.table>thead>tr>td, .table>thead>tr>th{
+    vertical-align: middle;
+}
+.lists>.row>.col-md-10>.col-md-10>h3{
+    margin: 5px 0;
+}
+.lang{
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.locale{
+    display: inline-block;
+    font-size: 12px;
+}
+input[type='submit'].input-locale{
+    border: none;
+    background-color: transparent;
+    padding: 0 3px;
+}
+.select{
+    font-weight: bold;
+    font-size: 13px;
+    border-bottom: 1px #636B6F solid;
+}

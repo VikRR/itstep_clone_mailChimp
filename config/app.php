@@ -170,6 +170,7 @@ return [
         //
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
+
         /*
          * Application Service Providers...
          */

@@ -20,9 +20,17 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/model', 'HomeController@model');
 
-Route::group(['middleware' => 'auth'], function(){
-	Route::resource('subscribers', 'SubscriberController');
-	Route::resource('lists','ListController');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('subscribers', 'SubscriberController');
+    Route::resource('lists', 'ListController');
+    Route::get('/send-email','SendController@form');
+    Route::post('/send-email','SendController@send');
 });
+
+Route::post('language', [
+    'before' => 'csrf',
+    //'as'     => 'language-chooser',
+    'uses'   => 'LocalizationController@switch',
+]);
 
 

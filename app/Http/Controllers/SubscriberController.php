@@ -14,7 +14,8 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        //
+        $subscribers = SubscriberModel::paginate(5);
+        return view('subscribers.index', ['subscribers' => $subscribers]);
     }
 
     /**
@@ -40,14 +41,17 @@ class SubscriberController extends Controller
         // dump($request->except(['first_name']));
         // exit;
         $this->validator($request->all())->validate();
-        SubscriberModel::create([
+        $subscriber = SubscriberModel::create([
             'user_id'    => \Auth::user()->id,
             'first_name' => $request->get('first_name'),
             'last_name'  => $request->get('last_name'),
             'email'      => $request->get('email'),
         ]);
 
-        return redirect('subscribers/'.\Auth::user()->id);
+        return redirect('/subscribers')
+            ->with([
+                'flash_message' => 'Subscriber ' . $subscriber->email . ' created successfully',
+            ]);
     }
 
     /**
@@ -58,12 +62,7 @@ class SubscriberController extends Controller
      */
     public function show($id)
     {
-        $subscribers = SubscriberModel::select('id', 'first_name', 'last_name', 'email')
-            ->where(['user_id' => $id])
-            ->get();
-        dump($subscribers);
-
-        return view('subscribers.list', ['subscribers' => $subscribers]);
+        //
     }
 
     /**
@@ -77,7 +76,6 @@ class SubscriberController extends Controller
         $subscribers = SubscriberModel::select(['id', 'first_name', 'last_name', 'email'])
             ->where(['id' => $id])
             ->get();
-        dump($subscribers);
 
         return view('subscribers.update', ['subscribers' => $subscribers]);
     }
@@ -94,28 +92,34 @@ class SubscriberController extends Controller
         $this->validator($request->all())->validate();
         $subscribers = SubscriberModel::find($id);
         $subscribers->update([
-                'first_name' => $request->get('first_name'),
-                'last_name'  => $request->get('last_name'),
-                'email'      => $request->get('email'),
-            ]);
+            'first_name' => $request->get('first_name'),
+            'last_name'  => $request->get('last_name'),
+            'email'      => $request->get('email'),
+        ]);
 
-        //return redirect()->action('SubscriberController@show',[\Auth::user()->id]);
-        return view('subscribers.list',['subscribers' => $subscribers]);
+        return redirect('/subscribers')
+            ->with([
+                'flash_message' => $subscribers->email . ' user data has been successfully updated!',
+            ]);
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        $subscriber = SubscriberModel::find($id);
+        $subscriber = SubscriberModel::findOrFail($id);
         $subscriber->delete();
 
-        return redirect('/subscribers/'.\Auth::user()->id);
+        return redirect()
+            ->back()
+            ->with([
+                'flash_message' => 'Subscriber ' . $subscriber->email . ' successfully delete.',
+            ]);
     }
+
 
     /**
      * @param array $data

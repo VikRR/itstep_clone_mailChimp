@@ -7,11 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ListModel extends Model
 {
-	use SoftDeletes;
-	
+    use SoftDeletes;
     protected $table = 'lists';
-    
     protected $fillable = ['user_id','name'];
-    
-    
 }
