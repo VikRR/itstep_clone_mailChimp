@@ -1,0 +1,1 @@
+<div style="text-align:center; color:red; font-size: 24px">{{ $text }}</div>
