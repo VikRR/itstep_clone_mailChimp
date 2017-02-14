@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User as UserModel;
 use Illuminate\Http\Request;
 use App\Models\Subscriber as SubscriberModel;
 
@@ -14,7 +15,9 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        $subscribers = SubscriberModel::paginate(5);
+//        $subscribers = SubscriberModel::paginate(5);
+        $subscribers = UserModel::findOrFail(\Auth::user()->id)->subscribers()->paginate(5);
+        
         return view('subscribers.index', ['subscribers' => $subscribers]);
     }
 
@@ -25,7 +28,7 @@ class SubscriberController extends Controller
      */
     public function create()
     {
-        return view('subscribers.create');
+        return view('subscribers.create',['subscriber'=>new SubscriberModel()]);
     }
 
     /**
