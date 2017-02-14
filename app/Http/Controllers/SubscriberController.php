@@ -28,7 +28,7 @@ class SubscriberController extends Controller
      */
     public function create()
     {
-        return view('subscribers.create',['subscriber'=>new SubscriberModel()]);
+        return view('subscribers.create',['subscribers'=>new SubscriberModel()]);
     }
 
     /**
@@ -76,11 +76,12 @@ class SubscriberController extends Controller
      */
     public function edit($id)
     {
-        $subscribers = SubscriberModel::select(['id', 'first_name', 'last_name', 'email'])
-            ->where(['id' => $id])
-            ->get();
+//        $subscribers = SubscriberModel::select(['id', 'first_name', 'last_name', 'email'])
+//            ->where(['id' => $id])
+//            ->get();
+        $subscribers = SubscriberModel::findOrFail($id);
 
-        return view('subscribers.update', ['subscribers' => $subscribers]);
+        return view('subscribers.create', ['subscribers' => $subscribers]);
     }
 
     /**
@@ -93,12 +94,18 @@ class SubscriberController extends Controller
     public function update(Request $request, $id)
     {
         $this->validator($request->all())->validate();
-        $subscribers = SubscriberModel::find($id);
-        $subscribers->update([
-            'first_name' => $request->get('first_name'),
-            'last_name'  => $request->get('last_name'),
-            'email'      => $request->get('email'),
-        ]);
+        $subscribers = SubscriberModel::findOrFail($id);
+//        $subscribers->update([
+//            'first_name' => $request->get('first_name'),
+//            'last_name'  => $request->get('last_name'),
+//            'email'      => $request->get('email'),
+//        ]);
+        $subscribers->fill($request->only([
+            'fist_name',
+            'last_name',
+            'email',
+        ]));
+        $subscribers->save();
 
         return redirect('/subscribers')
             ->with([
@@ -111,9 +118,10 @@ class SubscriberController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(SubscriberModel $subscriber)
     {
-        $subscriber = SubscriberModel::findOrFail($id);
+//        $subscriber = SubscriberModel::findOrFail($id);
+        
         $subscriber->delete();
 
         return redirect()

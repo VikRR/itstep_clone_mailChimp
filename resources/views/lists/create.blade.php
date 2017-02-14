@@ -22,8 +22,13 @@
                                 {{ csrf_field() }}
                                 <div class="form-group {{ ($errors->has('name'))?' has error' :'' }}">
                                     <label for="name">{{ trans('ListsCreate.name') }}</label>
-                                    <input id="name" class="form-control" type="text" name="name"
+                                    @if($list->exists)
+                                        <input id="name" class="form-control" type="text" name="name"
+                                           value="{{ $list->name }}" required autofocus>
+                                    @else
+                                        <input id="name" class="form-control" type="text" name="name"
                                            value="{{ old('name') }}" required autofocus>
+                                        @endif
                                     @if($errors->has('name'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>

@@ -42,11 +42,11 @@
                                         <td>{{ $subscriber->first_name . ' ' . $subscriber->last_name }}</td>
                                         <td>{{ $subscriber->email }}</td>
                                         <td>
-                                            <a href="{{ url('/subscribers/' . $subscriber->id . '/edit') }}"
+                                            <a href="{{ url('/subscribers',[$subscriber->id,'edit']) }}"
                                                class="btn btn-primary">{{ trans('SubscribersIndex.update') }}</a>
                                         </td>
                                         <td>
-                                            <form action="{{ url('/subscribers'),$subscriber->id }}" method="post">
+                                            <form action="{{ url('/subscribers',$subscriber->id) }}" method="post">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
                                                 <button class="btn btn-danger"
