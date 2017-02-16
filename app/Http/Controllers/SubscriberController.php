@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User as UserModel;
 use Illuminate\Http\Request;
+use Illuminate\Http\UserAdd as UserRequest;
+
 use App\Models\Subscriber as SubscriberModel;
 
 class SubscriberController extends Controller
@@ -37,13 +39,13 @@ class SubscriberController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         // echo $request->has('first_name');
         // dump($request->only(['first_name']));
         // dump($request->except(['first_name']));
         // exit;
-        $this->validator($request->all())->validate();
+//        $this->validator($request->all())->validate();
         $subscriber = SubscriberModel::create([
             'user_id'    => \Auth::user()->id,
             'first_name' => $request->get('first_name'),
@@ -91,7 +93,7 @@ class SubscriberController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $this->validator($request->all())->validate();
         $subscribers = SubscriberModel::findOrFail($id);
@@ -143,5 +145,16 @@ class SubscriberController extends Controller
             'last_name'  => 'required|max:128|min:2',
             'email'      => 'required|email|max:128',
         ]);
+    }
+
+
+    public function editSubscriber()
+    {
+        //$subscriber = UserModel::findOrFail(\Auth::user()->id)->subscribers()->paginate(5);
+        //
+        return view('lists.edit');
+        //return redirect()
+        //->back()
+        //->with(['subscriber'=>$subscriber]);
     }
 }
