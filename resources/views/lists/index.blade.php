@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+    {{--<div class="container">--}}
+        {{--<div class="row">--}}
+            <div class="col-md-8">
                 <div class="panel panel-default">
                     @if ( \Session::has('flash_message') )
                         <div class="alert alert-success alert-dismissible">
@@ -15,10 +15,10 @@
                     <div class="panel-heading lists">
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
-                                <div class="col-md-10 text-center">
+                                <div class="col-md-10">
                                     <h3>{{ trans('ListIndex.list') }}</h3>
                                 </div>
-                                <div class="col-md-2 text-center">
+                                <div class="col-md-2">
                                     <a class="btn btn-default" href="{{url('/lists/create')}}">{{ trans('Form.add') }}</a>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                 </div>
                 {!! $lists->render() !!}
             </div>
-        </div>
-    </div>
+        </div> <!-- row layouts.app -->
+    </div> <!-- container layouts.app -->
 
 @endsection

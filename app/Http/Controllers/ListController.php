@@ -21,9 +21,9 @@ class ListController extends Controller
     public function index()
     {
         $lists = ListModel::paginate(5);
-//        $lists = UserModel::find(\Auth::user()->id)->lists()->paginate(5);
-//        $lists=UserModel::find(\Auth::user()->id)->lists()->paginate(10);
-//        dd($lists);
+
+        //$lists = UserModel::find(\Auth::user()->id)->lists()->paginate(5);
+
         return view('lists.index', ['lists' => $lists]);
     }
 
@@ -34,7 +34,7 @@ class ListController extends Controller
      */
     public function create()
     {
-        return view('lists.create', ['list'=>new ListModel()]);
+        return view('lists.create', ['list' => new ListModel()]);
     }
 
     /**
@@ -64,8 +64,12 @@ class ListController extends Controller
     public function show($id)
     {
         $list = ListModel::findOrFail($id);
-        
-        return view('lists.list',['list'=>$list]);
+        $subscribers = UserModel::findOrFail(\Auth::user()->id)->subscribers()->get();
+
+        return view('lists.list', [
+            'list'        => $list,
+            'subscribers' => $subscribers,
+        ]);
     }
 
     /**
@@ -77,35 +81,33 @@ class ListController extends Controller
     public function edit($id)
     {
         $list = ListModel::findOrFail($id);
-        
-        return view('lists.create',['list'=>$list]);
+
+        return view('lists.create', ['list' => $list]);
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param CreateRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(CreateRequest $request, $id)
     {
         $list = ListModel::findOrFail($id);
         $list->fill($request->only([
             'name',
         ]));
         $list->save();
-        
+
         return redirect('/lists')->with([
-            'flash_messages'=>'List '.$list->name.' successfully update',
+            'flash_messages' => 'List ' . $list->name . ' successfully update',
         ]);
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param ListModel $list
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(ListModel $list)
     {
@@ -116,6 +118,42 @@ class ListController extends Controller
             ->back()
             ->with([
                 'flash_message' => 'List ' . $list->name . ' successfully delete.',
+            ]);
+    }
+
+    /**
+     * @param $list
+     * @param $subscriber
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addSubscriber($list, $subscriber)
+    {
+        $subscriber = UserModel::findOrFail(\Auth::user()->id)->subscribers()->find($subscriber);
+        $list = ListModel::findOrFail($list);
+
+        ($list->subscribers()->find($subscriber) !== null) ?: $list->subscribers()->attach($subscriber);
+
+        return redirect()
+            ->back()
+            ->with([
+                'flash_message' => 'Subscribers ' . $subscriber->email . ' successfully add.',
+            ]);
+    }
+
+    /**
+     * @param $list
+     * @param $subscriber
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delSubscriber($list, $subscriber)
+    {
+        $list = ListModel::findOrFail($list);
+        $list->subscribers()->detach($subscriber);
+
+        return redirect()
+            ->back()
+            ->with([
+                'flash_message' => 'Subscribers successfully delete.',
             ]);
     }
 }
