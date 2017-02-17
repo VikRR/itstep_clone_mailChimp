@@ -52,23 +52,26 @@
                 @if(Auth::user())
                     <div class="col-md-2 col-md-push-9 lang">
                         <div {{ (App::isLocale('en'))? 'class=select' : '' }}>
-                            <form class="locale" action="{{ action('LocalizationController@langSwitch') }}" method="post">
+                            <form class="locale" action="{{ action('LocalizationController@langSwitch') }}"
+                                  method="post">
                                 {{ csrf_field() }}
-                                <input type="text" hidden name="locale" value="en"></input>
+                                <input type="hidden" name="locale" value="en"></input>
                                 <input class="input-locale" type="submit" name="submit" value="En">
                             </form>
                         </div>
                         <div {{ (App::isLocale('ua'))? 'class=select' : ''}}>
-                            <form class="locale" action="{{ action('LocalizationController@langSwitch') }}" method="post">
+                            <form class="locale" action="{{ action('LocalizationController@langSwitch') }}"
+                                  method="post">
                                 {{ csrf_field() }}
-                                <input type="text" hidden name="locale" value="ua"></input>
+                                <input type="hidden" name="locale" value="ua"></input>
                                 <input class="input-locale" type="submit" name="submit" value="Ua">
                             </form>
                         </div>
                         <div {{ (App::isLocale('ru'))? 'class = select' : ''}}>
-                            <form class="locale" action="{{ action('LocalizationController@langSwitch') }}" method="post">
+                            <form class="locale" action="{{ action('LocalizationController@langSwitch') }}"
+                                  method="post">
                                 {{ csrf_field() }}
-                                <input type="text" hidden name="locale" value="ru"></input>
+                                <input type="hidden" name="locale" value="ru"></input>
                                 <input class="input-locale" type="submit" name="submit" value="Ru">
                             </form>
                         </div>
@@ -107,12 +110,17 @@
         </div>
     </nav>
 
-    @if(Auth::user())
-        @include('navbar')
-    @endif
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                @if(Auth::user())
+                    @include('navbar')
+                @endif
+            </div>
+
 
     @yield('content')
-</div>
+</div> <!-- app -->
 
 <!-- Scripts -->
 <script src="/js/app.js"></script>

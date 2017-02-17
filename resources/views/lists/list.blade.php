@@ -2,7 +2,6 @@
 
 @section('content')
 
-    {{--<div class="row">--}}
     <div class="col-md-8">
         <div class="panel panel-default">
             @if ( \Session::has('flash_message') )
@@ -56,7 +55,6 @@
                 </div> <!-- col-md-10 col-md-offset-1 -->
             </div> <!-- panel body -->
         </div> <!-- panel -->
-        {{-- paginate --}}
     </div> <!-- col-md-8 col-md-offset-2 -->
 
     <!-- Modal -->
