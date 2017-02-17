@@ -26,3 +26,6 @@ input[type='submit'].input-locale{
     font-size: 13px;
     border-bottom: 1px #636B6F solid;
 }
+.ok{
+    width: 80px;
+}
