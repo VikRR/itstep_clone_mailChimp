@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User as UserModel;
 use Illuminate\Http\Request;
-use Illuminate\Http\UserAdd as UserRequest;
+use App\Http\Requests\UserAdd as UserRequest;
 
 use App\Models\Subscriber as SubscriberModel;
 

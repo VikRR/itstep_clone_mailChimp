@@ -26,9 +26,9 @@ class SettingController extends Controller
      */
     public function setting(Request $request)
     {
-
         $user = UserModel::findOrFail(\Auth::user()->id);
         $setting = EmailSettings::findOrFail($request->setting);
+        \Config::set('mail.driver', $setting->type);
         if ($user->sendTypes() !== null) {
             $user->sendTypes()->detach();
             $user->sendTypes()->attach($setting);

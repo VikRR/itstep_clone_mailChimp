@@ -130,7 +130,6 @@ class ListController extends Controller
     {
         $subscriber = UserModel::findOrFail(\Auth::user()->id)->subscribers()->find($subscriber);
         $list = ListModel::findOrFail($list);
-
         ($list->subscribers()->find($subscriber) !== null) ?: $list->subscribers()->attach($subscriber);
 
         return redirect()
