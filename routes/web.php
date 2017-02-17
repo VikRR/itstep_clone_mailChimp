@@ -25,13 +25,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('lists', 'ListController');
     Route::post('lists/{list}/delete/{subscriber}','ListController@delSubscriber');
     Route::post('lists/{list}/subscriber/{subscriber}','ListController@addSubscriber');
-
+    Route::get('/setting','SettingController@index');
+    Route::post('/setting','SettingController@setting');
+    Route::post('language', [
+        'before' => 'csrf',
+        //'as'     => 'language-chooser',
+        'uses'   => 'LocalizationController@langSwitch',
+    ]);
 });
 
-Route::post('language', [
-    'before' => 'csrf',
-    //'as'     => 'language-chooser',
-    'uses'   => 'LocalizationController@langSwitch',
-]);
+
 
 
