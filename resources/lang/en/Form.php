@@ -6,4 +6,8 @@ return [
     'password'   => 'Password',
     'confirm'    => 'Confirm Password',
     'email'      => 'E-Mail Address',
+    'add'        => 'Add',
+    'delete'     => 'Delete',
+    'update'     => 'Update',
+    'ok'         => 'OK',
 ];

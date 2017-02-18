@@ -15,7 +15,7 @@ class LocalizationController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function switch ()
+    public function langSwitch ()
     {
         Session::put('locale', Input::get('locale'));
 

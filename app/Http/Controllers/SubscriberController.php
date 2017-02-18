@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User as UserModel;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserAdd as UserRequest;
+
 use App\Models\Subscriber as SubscriberModel;
 
 class SubscriberController extends Controller
@@ -14,7 +17,9 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        $subscribers = SubscriberModel::paginate(5);
+//        $subscribers = SubscriberModel::paginate(5);
+        $subscribers = UserModel::findOrFail(\Auth::user()->id)->subscribers()->paginate(5);
+        
         return view('subscribers.index', ['subscribers' => $subscribers]);
     }
 
@@ -25,7 +30,7 @@ class SubscriberController extends Controller
      */
     public function create()
     {
-        return view('subscribers.create');
+        return view('subscribers.create',['subscribers'=>new SubscriberModel()]);
     }
 
     /**
@@ -34,13 +39,13 @@ class SubscriberController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         // echo $request->has('first_name');
         // dump($request->only(['first_name']));
         // dump($request->except(['first_name']));
         // exit;
-        $this->validator($request->all())->validate();
+//        $this->validator($request->all())->validate();
         $subscriber = SubscriberModel::create([
             'user_id'    => \Auth::user()->id,
             'first_name' => $request->get('first_name'),
@@ -73,11 +78,12 @@ class SubscriberController extends Controller
      */
     public function edit($id)
     {
-        $subscribers = SubscriberModel::select(['id', 'first_name', 'last_name', 'email'])
-            ->where(['id' => $id])
-            ->get();
+//        $subscribers = SubscriberModel::select(['id', 'first_name', 'last_name', 'email'])
+//            ->where(['id' => $id])
+//            ->get();
+        $subscribers = SubscriberModel::findOrFail($id);
 
-        return view('subscribers.update', ['subscribers' => $subscribers]);
+        return view('subscribers.create', ['subscribers' => $subscribers]);
     }
 
     /**
@@ -87,15 +93,21 @@ class SubscriberController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $this->validator($request->all())->validate();
-        $subscribers = SubscriberModel::find($id);
-        $subscribers->update([
-            'first_name' => $request->get('first_name'),
-            'last_name'  => $request->get('last_name'),
-            'email'      => $request->get('email'),
-        ]);
+        $subscribers = SubscriberModel::findOrFail($id);
+//        $subscribers->update([
+//            'first_name' => $request->get('first_name'),
+//            'last_name'  => $request->get('last_name'),
+//            'email'      => $request->get('email'),
+//        ]);
+        $subscribers->fill($request->only([
+            'fist_name',
+            'last_name',
+            'email',
+        ]));
+        $subscribers->save();
 
         return redirect('/subscribers')
             ->with([
@@ -108,9 +120,10 @@ class SubscriberController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(SubscriberModel $subscriber)
     {
-        $subscriber = SubscriberModel::findOrFail($id);
+//        $subscriber = SubscriberModel::findOrFail($id);
+        
         $subscriber->delete();
 
         return redirect()
@@ -132,5 +145,16 @@ class SubscriberController extends Controller
             'last_name'  => 'required|max:128|min:2',
             'email'      => 'required|email|max:128',
         ]);
+    }
+
+
+    public function editSubscriber()
+    {
+        //$subscriber = UserModel::findOrFail(\Auth::user()->id)->subscribers()->paginate(5);
+        //
+        return view('lists.edit');
+        //return redirect()
+        //->back()
+        //->with(['subscriber'=>$subscriber]);
     }
 }

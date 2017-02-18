@@ -23,14 +23,19 @@ Route::get('/model', 'HomeController@model');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('subscribers', 'SubscriberController');
     Route::resource('lists', 'ListController');
-    Route::get('/send-email','SendController@form');
-    Route::post('/send-email','SendController@send');
+    Route::post('lists/{list}/delete/{subscriber}','ListController@delSubscriber');
+    Route::post('lists/{list}/subscriber/{subscriber}','ListController@addSubscriber');
+    Route::get('/setting','SettingController@index');
+    Route::post('/setting','SettingController@setting');
+    Route::post('/send-email','SendController@');
+
+    Route::post('language', [
+        'before' => 'csrf',
+        //'as'     => 'language-chooser',
+        'uses'   => 'LocalizationController@langSwitch',
+    ]);
 });
 
-Route::post('language', [
-    'before' => 'csrf',
-    //'as'     => 'language-chooser',
-    'uses'   => 'LocalizationController@switch',
-]);
+
 
 

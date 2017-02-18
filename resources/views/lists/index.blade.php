@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+    {{--<div class="container">--}}
+        {{--<div class="row">--}}
+            <div class="col-md-8">
                 <div class="panel panel-default">
                     @if ( \Session::has('flash_message') )
                         <div class="alert alert-success alert-dismissible">
@@ -18,28 +18,28 @@
                                 <div class="col-md-10">
                                     <h3>{{ trans('ListIndex.list') }}</h3>
                                 </div>
-                                <div class="col-md-2 text-center">
-                                    <a class="btn btn-default"
-                                       href="{{url('/lists/create')}}">{{ trans('ListIndex.add') }}</a>
+                                <div class="col-md-2">
+                                    <a class="btn btn-default" href="{{url('/lists/create')}}">{{ trans('Form.add') }}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-10 col-md-offset-1">
-                            <table class="table table-striped">
-                                <!-- Table Headings -->
+                            <table class='table table-striped'>
                                 <thead>
-                                <th>{{ trans('ListIndex.name') }}</th>
-                                <th></th>
+                                        <th>{{trans('ListIndex.name')}}</th>
+                                        <th></th>
+                                        <th></th>
                                 </thead>
-                                <!-- Table Body -->
                                 <tbody>
-
-                                @foreach ($lists as $list)
+                                    @foreach($lists as $list)
                                     <tr>
                                         <td class="table-text">
-                                            {{$list->name}}
+                                            <a href='{{ url('/lists',$list->id) }}'> {{$list->name}} </a>
+                                        </td>
+                                        <td>
+                                            <a class='btn btn-primary' href='{{ url('/lists',[$list->id,'edit']) }}'> {{ trans('Form.update') }} </a>
                                         </td>
                                         <td>
                                           <form action="{{ url('/lists',[$list->id ,'edit']) }}" method="get">
@@ -52,19 +52,24 @@
                                             <form class="text-right" action="{{url('/lists',$list->id)}}" method="POST">
                                                 {{csrf_field()}}
                                                 {{method_field('DELETE')}}
-                                                <button class="btn btn-danger">{{ trans('ListIndex.button') }}</button>
+                                                <button class="btn btn-danger"> {{ trans('Form.delete') }} </button>
                                             </form>
                                         </td>
                                     </tr>
+<<<<<<< HEAD
                                 @endforeach
+=======
+                                    @endforeach
+>>>>>>> c182b829cd58f9b29de1f850814cfe0a37fda179
                                 </tbody>
+                                
                             </table>
                         </div>
                     </div>
                 </div>
                 {{ $lists->links() }}
             </div>
-        </div>
-    </div>
+        </div> <!-- row layouts.app -->
+    </div> <!-- container layouts.app -->
 
 @endsection

@@ -26,6 +26,17 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('queue:work')
+                ->everyMinute()
+                ->withoutOverlapping();
+//        withoutOverlapping() проверка запушеная или нет задача
+//        
+        $schedule->command('migrate')
+                ->everyFiveMinutes()
+                ->withoutOverlapping();
+//        php artisan schedule:run включить в cron
+//        указать запуск seed
+        
     }
 
     /**

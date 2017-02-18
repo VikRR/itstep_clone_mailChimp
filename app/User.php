@@ -15,7 +15,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -24,13 +26,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
-    public function subscribers(){
+    public function subscribers()
+    {
         return $this->hasMany('App\Models\Subscriber');// namespace с кем связываем
     }
-    public function lists(){
-        return $this->hasMany('App\Models\ListModel');
+
+    public function sendTypes()
+    {
+        return $this->belongsToMany('App\Models\EmailSettings', 'email_send_settings', 'user_id',
+            'email_send_type_id');
     }
 }

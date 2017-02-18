@@ -9,5 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Subscriber extends Model
 {
 	use SoftDeletes;//подключение трейта
-	protected $fillable = ['user_id', 'first_name', 'last_name', 'email'];   
+        protected $table = 'subscribers';
+        protected $fillable = ['user_id', 'first_name', 'last_name', 'email'];
+        
+        public function lists(){
+            
+            return $this->belongsToMany('App\Models\ListModel', 'list_subscribers','subscriber_id','list_id');
+        }
 }

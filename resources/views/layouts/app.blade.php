@@ -49,29 +49,34 @@
                 </ul>
 
                 <!-- Right Side Of Navbar -->
-                <div class="col-md-2 col-md-push-9 lang">
-                    <div {{ (App::isLocale('en'))? 'class=select' : '' }}>
-                        <form class="locale" action="{{ action('LocalizationController@switch') }}" method="post">
-                            {{ csrf_field() }}
-                            <input type="text" hidden name="locale" value="en"></input>
-                            <input class="input-locale" type="submit" name="submit" value="En">
-                        </form>
+                @if(Auth::user())
+                    <div class="col-md-2 col-md-push-9 lang">
+                        <div {{ (App::isLocale('en'))? 'class=select' : '' }}>
+                            <form class="locale" action="{{ action('LocalizationController@langSwitch') }}"
+                                  method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="locale" value="en"></input>
+                                <input class="input-locale" type="submit" name="submit" value="En">
+                            </form>
+                        </div>
+                        <div {{ (App::isLocale('ua'))? 'class=select' : ''}}>
+                            <form class="locale" action="{{ action('LocalizationController@langSwitch') }}"
+                                  method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="locale" value="ua"></input>
+                                <input class="input-locale" type="submit" name="submit" value="Ua">
+                            </form>
+                        </div>
+                        <div {{ (App::isLocale('ru'))? 'class = select' : ''}}>
+                            <form class="locale" action="{{ action('LocalizationController@langSwitch') }}"
+                                  method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="locale" value="ru"></input>
+                                <input class="input-locale" type="submit" name="submit" value="Ru">
+                            </form>
+                        </div>
                     </div>
-                    <div {{ (App::isLocale('ua'))? 'class=select' : ''}}>
-                        <form class="locale" action="{{ action('LocalizationController@switch') }}" method="post">
-                            {{ csrf_field() }}
-                            <input type="text" hidden name="locale" value="ua"></input>
-                            <input class="input-locale" type="submit" name="submit" value="Ua">
-                        </form>
-                    </div>
-                    <div {{ (App::isLocale('ru'))? 'class = select' : ''}}>
-                        <form class="locale" action="{{ action('LocalizationController@switch') }}" method="post">
-                            {{ csrf_field() }}
-                            <input type="text" hidden name="locale" value="ru"></input>
-                            <input class="input-locale" type="submit" name="submit" value="Ru">
-                        </form>
-                    </div>
-                </div>
+                @endif
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
@@ -89,7 +94,7 @@
                                     <a href="{{ url('/logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ trans('layoutsindex.logout') }}
+                                        {{ trans('layoutsIndex.logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST"
@@ -105,12 +110,17 @@
         </div>
     </nav>
 
-    @if(Auth::user())
-        @include('navbar')
-    @endif
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                @if(Auth::user())
+                    @include('navbar')
+                @endif
+            </div>
+
 
     @yield('content')
-</div>
+</div> <!-- app -->
 
 <!-- Scripts -->
 <script src="/js/app.js"></script>
