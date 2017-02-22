@@ -15,19 +15,12 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'guzzle'=>[
-            'curl'=>[
-            'CURLOPT_PROXY'=>'10.3.0.9',
-            'CURLOPT_PROXYPORT'=>3128,
-            'CURLOPT_PROXYUSERPWD'=>'08631:bar807m71',
-            ],
-        ],
+        'domain' => 'https://api.mailgun.net/v3/sandbox976bcde896954846b493619d9abd3fef.mailgun.org',
+        'secret' => 'key-528ed5ce5eb53fa85780b4a8b7ab27aa',
     ],
 
     'ses' => [
-        'key' => env('SES_KEY'),
+        'key'    => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
         'region' => 'us-east-1',
     ],
@@ -37,9 +30,10 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\User::class,
-        'key' => env('STRIPE_KEY'),
+        'model'  => App\User::class,
+        'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'guzzle' => ['verify' => false],
 
 ];

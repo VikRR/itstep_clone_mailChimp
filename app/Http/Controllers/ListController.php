@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 
-
 use App\Models\ListModel;
 use App\User as UserModel;
 use Illuminate\Http\Request;
@@ -13,7 +12,6 @@ use App\Http\Requests\Create as CreateRequest;
  * Class ListController
  * @package App\Http\Controllers
  */
-
 class ListController extends Controller
 {
     /**
@@ -23,10 +21,7 @@ class ListController extends Controller
      */
     public function index()
     {
-
-        $lists = ListModel::paginate(5);
-
-        //$lists = UserModel::find(\Auth::user()->id)->lists()->paginate(5);
+        $lists = UserModel::find(\Auth::user()->id)->lists()->paginate(5);
 
         return view('lists.index', ['lists' => $lists]);
     }
@@ -44,7 +39,6 @@ class ListController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-
      * @param  \App\Http\Requests\Create $request
      * @return \Illuminate\Http\Response
      */
@@ -63,7 +57,6 @@ class ListController extends Controller
     /**
      * Display the specified resource.
      *
-
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -81,7 +74,6 @@ class ListController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -112,13 +104,11 @@ class ListController extends Controller
     }
 
     /**
-
      * @param ListModel $list
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(ListModel $list)
     {
-//        $list = ListModel::findOrFail($id);
         $list->delete();
 
         return redirect()
@@ -135,15 +125,25 @@ class ListController extends Controller
      */
     public function addSubscriber($list, $subscriber)
     {
-        $subscriber = UserModel::findOrFail(\Auth::user()->id)->subscribers()->find($subscriber);
+        $subscribers = UserModel::findOrFail(\Auth::user()->id)->subscribers()->find($subscriber);
         $list = ListModel::findOrFail($list);
-        ($list->subscribers()->find($subscriber) !== null) ?: $list->subscribers()->attach($subscriber);
 
-        return redirect()
-            ->back()
-            ->with([
-                'flash_message' => 'Subscribers ' . $subscriber->email . ' successfully add.',
-            ]);
+        if ($list->subscribers()->find($subscriber)) {
+
+            return redirect()
+                ->back()
+                ->with([
+                    'flash_message' => 'Subscribers ' . $subscribers->email . ' has been added to the list.',
+                ]);
+        } else {
+            $list->subscribers()->attach($subscriber);
+
+            return redirect()
+                ->back()
+                ->with([
+                    'flash_message' => 'Subscribers ' . $subscribers->email . ' successfully add.',
+                ]);
+        }
     }
 
     /**
@@ -162,4 +162,5 @@ class ListController extends Controller
                 'flash_message' => 'Subscribers successfully delete.',
             ]);
     }
+//    todo-me localization flash message controller List
 }

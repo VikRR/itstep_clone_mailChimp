@@ -5,6 +5,10 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -30,14 +34,27 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subscribers()
     {
-        return $this->hasMany('App\Models\Subscriber');// namespace с кем связываем
+        return $this->hasMany('App\Models\Subscriber');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function lists()
+    {
+        return $this->hasMany('App\Models\ListModel');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function sendTypes()
     {
-        return $this->belongsToMany('App\Models\EmailSettings', 'email_send_settings', 'user_id',
-            'email_send_type_id');
+        return $this->belongsToMany('App\Models\EmailSettings', 'email_send_settings', 'user_id', 'email_send_type_id');
     }
 }

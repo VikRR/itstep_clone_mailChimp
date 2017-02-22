@@ -4,8 +4,8 @@
             <ul class="nav nav-pills nav-stacked">
                 <li><a href="{{ url('/subscribers') }}">{{ trans('navbar.subscriber_list') }}</a></li>
                 <li><a href="{{ url('/lists') }}">{{ trans('navbar.lists') }}</a></li>
-                <li><a href="#">{{ trans('navbar.send_mail') }}</a></li>
-                <li><a href="{{ url('/setting') }}">{{ trans('navbar.settings') }}</a></li>
+                <li><a href="{{ url('email/send') }}">{{ trans('navbar.send_mail') }}</a></li>
+                <li><a href="{{ url('email/setting') }}">{{ trans('navbar.settings') }}</a></li>
             </ul>
         </div>
     </div>

@@ -17,7 +17,7 @@ class LocalizationController extends Controller
      */
     public function langSwitch ()
     {
-        Session::put('locale', Input::get('locale'));
+        \Session::put('locale', Input::get('locale'));
 
         return redirect()->action('MainController@index');
     }

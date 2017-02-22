@@ -118,8 +118,10 @@
                 @endif
             </div>
 
+            @yield('content')
 
-    @yield('content')
+        </div> <!-- row  -->
+    </div> <!-- container -->
 </div> <!-- app -->
 
 <!-- Scripts -->

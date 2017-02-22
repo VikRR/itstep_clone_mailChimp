@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\User as UserModel;
 use App\Models\EmailSettings;
 
+/**
+ * Class SettingController
+ * @package App\Http\Controllers
+ */
 class SettingController extends Controller
 {
 
@@ -28,7 +32,7 @@ class SettingController extends Controller
     {
         $user = UserModel::findOrFail(\Auth::user()->id);
         $setting = EmailSettings::findOrFail($request->setting);
-        \Config::set('mail.driver', $setting->type);
+
         if ($user->sendTypes() !== null) {
             $user->sendTypes()->detach();
             $user->sendTypes()->attach($setting);
@@ -36,8 +40,13 @@ class SettingController extends Controller
             $user->sendTypes()->attach($setting);
         }
 
-        return redirect('/');
+        return redirect()
+            ->back()
+            ->with([
+                'flash_message' => 'Settings ' . $setting->type . ' successfully add.',
+            ]);
     }
+    //    todo-me localization flash message controller Setting
 
 }
 

@@ -7,6 +7,10 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * Class Test
+ * @package App\Mail
+ */
 class Test extends Mailable
 {
     use Queueable, SerializesModels;
@@ -14,6 +18,11 @@ class Test extends Mailable
 
     private $message;
 
+    /**
+     * Test constructor.
+     * @param $message
+     * @param $subject
+     */
     public function __construct($message, $subject)
     {
         $this->message = $message;

@@ -3,7 +3,7 @@
 .table>thead>tr>td, .table>thead>tr>th{
     vertical-align: middle;
 }
-.lists>.row>.col-md-10>.col-md-10>h3{
+.lists .row h3{
     margin: 5px 0;
 }
 .lang{

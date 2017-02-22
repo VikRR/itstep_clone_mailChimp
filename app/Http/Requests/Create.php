@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class Create
+ * @package App\Http\Requests
+ */
 class Create extends FormRequest
 {
     /**
@@ -24,7 +28,7 @@ class Create extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|max:128|min:2',
+            'name' => 'required|max:128|min:2',
         ];
     }
 }

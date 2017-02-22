@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
+/**
+ * Class Subscriber
+ * @package App\Models
+ */
 class Subscriber extends Model
 {
-	use SoftDeletes;//подключение трейта
+	use SoftDeletes;
         protected $table = 'subscribers';
         protected $fillable = ['user_id', 'first_name', 'last_name', 'email'];
         
