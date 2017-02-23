@@ -12,7 +12,7 @@
             @endif
             <div class="panel-heading lists">
                 <div class="row text-center">
-                    <h3>Send message</h3>
+                    <h3>{{ trans('Send.sendMessage') }}</h3>
                 </div>
             </div>
             <div class="panel-body">
@@ -20,7 +20,7 @@
                 <form class="form-horizontal" role="form" method="POST" action="{{ url('email/send') }}">
                     {{csrf_field()}}
                     <div class="form-group{{ $errors->has('to') ? ' has-error' : '' }}">
-                        <label for="list_id" class="col-md-4 control-label">List</label>
+                        <label for="list_id" class="col-md-4 control-label">{{ trans('Send.list') }}</label>
                         <div class="col-md-6">
                             <select id="name" class="form-control" name="list_id" required autofocus>
                                 @foreach($lists as $list)
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
-                        <label for="subject" class="col-md-4 control-label">Subject</label>
+                        <label for="subject" class="col-md-4 control-label">{{ trans('Send.subject') }}</label>
 
                         <div class="col-md-6">
                             <input id="subject" type="text" class="form-control" name="subject"
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
-                        <label for="message" class="col-md-4 control-label">Message</label>
+                        <label for="message" class="col-md-4 control-label">{{ trans('Send.message') }}</label>
 
                         <div class="col-md-6">
                             <textarea id="message" type="text" class="form-control" name="message"
@@ -73,5 +73,4 @@
             </div>
         </div>
     </div>
-{{--todo-me lacalization send view--}}
 @endsection

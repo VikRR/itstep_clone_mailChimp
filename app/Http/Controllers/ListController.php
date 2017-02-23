@@ -48,9 +48,10 @@ class ListController extends Controller
             'user_id' => \Auth::user()->id,
             'name'    => $request->get('name'),
         ]);
+        $message = \Lang::get('ListMessage.created', ['name' => $list->name]);
 
         return redirect('/lists')->with([
-            'flash_message' => 'List ' . $list->name . ' created successfully',
+            'flash_message' => $message,
         ]);
     }
 
@@ -97,9 +98,10 @@ class ListController extends Controller
             'name',
         ]));
         $list->save();
+        $message = \Lang::get('ListMessage.update', ['name' => $list->name]);
 
         return redirect('/lists')->with([
-            'flash_messages' => 'List ' . $list->name . ' successfully update',
+            'flash_messages' => $message,
         ]);
     }
 
@@ -110,11 +112,12 @@ class ListController extends Controller
     public function destroy(ListModel $list)
     {
         $list->delete();
+        $message = \Lang::get('ListMessage.delete', ['name' => $list->name]);
 
         return redirect()
             ->back()
             ->with([
-                'flash_message' => 'List ' . $list->name . ' successfully delete.',
+                'flash_message' => $message,
             ]);
     }
 
@@ -129,19 +132,21 @@ class ListController extends Controller
         $list = ListModel::findOrFail($list);
 
         if ($list->subscribers()->find($subscriber)) {
+            $message = \Lang::get('ListMessage.hasAddSubscribers');
 
             return redirect()
                 ->back()
                 ->with([
-                    'flash_message' => 'Subscribers ' . $subscribers->email . ' has been added to the list.',
+                    'flash_message' => $message,
                 ]);
         } else {
             $list->subscribers()->attach($subscriber);
+            $message = \Lang::get('ListMessage.addSubscriber');
 
             return redirect()
                 ->back()
                 ->with([
-                    'flash_message' => 'Subscribers ' . $subscribers->email . ' successfully add.',
+                    'flash_message' => $message,
                 ]);
         }
     }
@@ -155,12 +160,12 @@ class ListController extends Controller
     {
         $list = ListModel::findOrFail($list);
         $list->subscribers()->detach($subscriber);
+        $message = \Lang::get('ListMessage.delSubscriber', ['name' => $list->name]);
 
         return redirect()
             ->back()
             ->with([
-                'flash_message' => 'Subscribers successfully delete.',
+                'flash_message' => $message,
             ]);
     }
-//    todo-me localization flash message controller List
 }

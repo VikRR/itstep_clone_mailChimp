@@ -41,8 +41,8 @@ class SendController extends Controller
         return redirect()
             ->back()
             ->with([
-                'flash_message' => 'Emails successfully sent.',
+                'flash_message' => 'Emails successfully send.',
             ]);
     }
-    //    todo-me localization flash message controller Send
+
 }

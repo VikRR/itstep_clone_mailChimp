@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User as UserModel;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserAdd as UserRequest;
+
 use App\Models\Subscriber as SubscriberModel;
 
 /**
@@ -47,10 +48,11 @@ class SubscriberController extends Controller
             'last_name'  => $request->get('last_name'),
             'email'      => $request->get('email'),
         ]);
+        $message = \Lang::get('SubscriberMessage.created', ['email' => $subscriber->email]);
 
         return redirect('/subscribers')
             ->with([
-                'flash_message' => 'Subscriber ' . $subscriber->email . ' created successfully',
+                'flash_message' => $message,
             ]);
     }
 
@@ -86,17 +88,19 @@ class SubscriberController extends Controller
 
     public function update(UserRequest $request, $id)
     {
-        $subscribers = SubscriberModel::findOrFail($id);
-        $subscribers->fill($request->only([
+        $this->validator($request->all())->validate();
+        $subscriber = SubscriberModel::findOrFail($id);
+        $subscriber->fill($request->only([
             'fist_name',
             'last_name',
             'email',
         ]));
-        $subscribers->save();
+        $subscriber->save();
+        $message = \Lang::get('SubscriberMessage.update', ['email' => $subscriber->email]);
 
         return redirect('/subscribers')
             ->with([
-                'flash_message' => $subscribers->email . ' user data has been successfully updated!',
+                'flash_message' => $message,
             ]);
     }
 
@@ -108,21 +112,32 @@ class SubscriberController extends Controller
     public function destroy(SubscriberModel $subscriber)
     {
         $subscriber->delete();
+        $message = \Lang::get('SubscriberMessage.delete', ['email' => $subscriber->email]);
 
         return redirect()
             ->back()
             ->with([
-                'flash_message' => 'Subscriber ' . $subscriber->email . ' successfully delete.',
+                'flash_message' => $message,
             ]);
     }
 
+
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param array $data
+     * @return \Illuminate\Validation\Validator
      */
+    protected function validator(array $data)
+    {
+        return \Validator::make($data, [
+            'first_name' => 'required|max:128|min:2',
+            'last_name'  => 'required|max:128|min:2',
+            'email'      => 'required|email|max:128',
+        ]);
+    }
+
     public function editSubscriber()
     {
 
         return view('lists.edit');
     }
-    //    todo-me localization flash message controller Subscribers
 }

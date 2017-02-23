@@ -126,5 +126,8 @@
 
 <!-- Scripts -->
 <script src="/js/app.js"></script>
+<script>
+    $('div.alert').not('.alert-important').delay(2500).slideUp(300);
+</script>
 </body>
 </html>

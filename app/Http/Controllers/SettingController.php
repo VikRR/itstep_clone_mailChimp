@@ -39,14 +39,13 @@ class SettingController extends Controller
         } else {
             $user->sendTypes()->attach($setting);
         }
+        $message = \Lang::get('Setting.success', ['type' => $setting->type]);
 
-        return redirect()
-            ->back()
+        return redirect('/email/send')
             ->with([
-                'flash_message' => 'Settings ' . $setting->type . ' successfully add.',
+                'flash_message' => $message,
             ]);
     }
-    //    todo-me localization flash message controller Setting
 
 }
 
