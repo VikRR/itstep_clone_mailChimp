@@ -12,7 +12,7 @@
             @endif
             <div class="panel-heading lists">
                 <div class="row text-center">
-                    <h3>{{ trans('Send.sendMessage') }}</h3>
+                    <h3>@lang('Send.sendMessage')</h3>
                 </div>
             </div>
             <div class="panel-body">

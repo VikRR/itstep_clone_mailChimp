@@ -5,5 +5,5 @@ return [
     'list'        => 'List',
     'subject'     => 'Subject',
     'message'     => 'Message',
-    'send'        => 'Emails successfully send.',
+    'send'        => 'Emails successfully send',
 ];
